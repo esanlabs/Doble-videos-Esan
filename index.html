@@ -12,11 +12,11 @@
 <a-scene>
 
   <a-assets>
-    <img id="imgLobby" src="patio.jpg">
+    <img id="imgLobby" src="pasto.jpg">
     <img id="imgAuditorio" src="butacas.jpg">
     <img id="imgAuditorio2" src="butacas3.jpg"> 
     <video id="videoUni" src="video2.mp4" crossorigin="anonymous" playsinline webkit-playsinline preload="auto"></video>
-    <video id="videoFundador" src="video4.mp4" crossorigin="anonymous" playsinline webkit-playsinline preload="auto"></video>
+    <video id="videoFundador" src="video5.mp4" crossorigin="anonymous" playsinline webkit-playsinline preload="auto"></video>
   </a-assets>
 
   <a-sky id="skyPrincipal" src="#imgLobby" radius="40" rotation="0 -90 0"></a-sky>
@@ -37,7 +37,8 @@
              width="30"
              height="15"
              material="shader: flat"
-             animation__entrar="property: scale; from: 0 0 0; to: 1 1 1; dur: 3000; easing: easeOutQuad; startEvents: videoEntra">
+             animation__entrar="property: scale; from: 0 0 0; to: 1 1 1; dur: 3000; easing: easeOutQuad; startEvents: videoEntra"
+             animation__salir="property: scale; to: 0 0 0; dur: 1500; easing: easeInBack; startEvents: videoSale">
     </a-video>
 
     <a-entity id="interfaz" position="0 -9 0.1">
@@ -146,6 +147,7 @@ videoFundador.addEventListener('timeupdate', actualizarBarra);
 function iniciarCine(videoSeleccionado) {
   videoActual = videoSeleccionado;
   pantalla.setAttribute('src', `#${videoSeleccionado.id}`);
+  pantalla.setAttribute('scale', '0 0 0'); // Asegura que inicie desde cero
 
   const rotation = camara.getAttribute('rotation');
   const angleY = rotation.y;
@@ -188,12 +190,10 @@ document.querySelector('#btnPausa').addEventListener('click', () => {
   else { videoActual.pause(); txtPausa.setAttribute('value', 'PLAY'); }
 });
 
-// BOTONES CORREGIDOS PARA AMBOS VIDEOS
 btnAvanzar.addEventListener('click', () => {
   if (videoActual && videoActual.duration) {
     saltoAvance += 10;
     saltoRetroceso = 10;
-    // Forzamos el salto sin importar el readyState (más permisivo)
     videoActual.currentTime = Math.min(videoActual.currentTime + 10, videoActual.duration);
     actualizarBarra();
     txtAvanzar.setAttribute('value', `+${saltoAvance}s`);
@@ -227,39 +227,47 @@ document.querySelector('#btnSalir').addEventListener('click', () => {
   videoActual.dispatchEvent(new Event('ended'));
 });
 
+// FUNCIÓN ACTUALIZADA CON CIERRE LENTO
 function finalizarVideo() {
-  grupoCine.setAttribute('visible', 'false');
-  skyButacas.setAttribute('visible', 'false');
-  skyPrincipal.setAttribute('visible', 'true');
-  oscurecerButacas.emit('luzOn');
-  oscurecerButacas.setAttribute('visible', 'false');
-  
-  if(videoActual.id === 'videoUni') {
-    textoBoton.setAttribute('value', 'VUELVE A VER\nNUESTRA\nHISTORIA');
-  } else {
-    textoBotonFundador.setAttribute('value', 'Volver a ver la historia de Alan B. Coleman');
-  }
+  // Emitimos el evento de cierre lento
+  pantalla.emit('videoSale');
 
-  contenedorBtn.setAttribute('visible', 'true');
-  contenedorBtnFundador.setAttribute('visible', 'true');
-  
-  const animOriginal = "property: position; to: -2 1.6 -2.5; dur: 8000; easing: easeOutCubic; delay: 500";
-  const animFundador = "property: position; to: 2 1.6 -2.5; dur: 8000; easing: easeOutCubic; delay: 500";
-  
-  contenedorBtn.setAttribute('position', '-2 1.6 -15');
-  contenedorBtnFundador.setAttribute('position', '2 1.6 -15');
-  
-  contenedorBtn.removeAttribute('animation');
-  contenedorBtnFundador.removeAttribute('animation');
-  
-  setTimeout(() => { 
-    contenedorBtn.setAttribute('animation', animOriginal); 
-    contenedorBtnFundador.setAttribute('animation', animFundador);
-  }, 50);
+  // Esperamos 1.5 segundos a que la pantalla se encoga totalmente
+  setTimeout(() => {
+    grupoCine.setAttribute('visible', 'false');
+    skyButacas.setAttribute('visible', 'false');
+    skyPrincipal.setAttribute('visible', 'true');
+    oscurecerButacas.emit('luzOn');
+    oscurecerButacas.setAttribute('visible', 'false');
+    
+    if(videoActual.id === 'videoUni') {
+      textoBoton.setAttribute('value', 'VUELVE A VER\nNUESTRA\nHISTORIA');
+    } else {
+      textoBotonFundador.setAttribute('value', 'Volver a ver la historia de Alan B. Coleman');
+    }
 
-  saltoAvance = 10; saltoRetroceso = 10;
-  txtAvanzar.setAttribute('value', '+10s');
-  txtRetro.setAttribute('value', '-10s');
+    contenedorBtn.setAttribute('visible', 'true');
+    contenedorBtnFundador.setAttribute('visible', 'true');
+    
+    // Reiniciar los botones para que entren desde lejos de nuevo
+    const animOriginal = "property: position; to: -2 1.6 -2.5; dur: 6000; easing: easeOutCubic; delay: 500";
+    const animFundador = "property: position; to: 2 1.6 -2.5; dur: 6000; easing: easeOutCubic; delay: 500";
+    
+    contenedorBtn.setAttribute('position', '-2 1.6 -15');
+    contenedorBtnFundador.setAttribute('position', '2 1.6 -15');
+    
+    contenedorBtn.removeAttribute('animation');
+    contenedorBtnFundador.removeAttribute('animation');
+    
+    setTimeout(() => { 
+      contenedorBtn.setAttribute('animation', animOriginal); 
+      contenedorBtnFundador.setAttribute('animation', animFundador);
+    }, 50);
+
+    saltoAvance = 10; saltoRetroceso = 10;
+    txtAvanzar.setAttribute('value', '+10s');
+    txtRetro.setAttribute('value', '-10s');
+  }, 1500); // 1.5 segundos de espera
 }
 
 videoUni.addEventListener('ended', finalizarVideo);
