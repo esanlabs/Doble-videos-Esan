@@ -49,23 +49,23 @@
 
       <a-entity id="controles" position="0 -1.8 0">
         <a-circle id="btnReset" class="clickable" radius="1.1" color="#FFFFFF" position="-8 0 0">
-          <a-text value="Reiniciar" color="#000" align="center" width="6.5" font="mozillavr" shader="msdf" negate="false"></a-text>
+          <a-text value="Reiniciar" color="#000" align="center" width="8" font="mozillavr" shader="msdf" negate="false"></a-text>
         </a-circle>
         
         <a-circle id="btnNormal" class="clickable" radius="1.1" color="#FFFFFF" position="-4 0 0">
-          <a-text value="1x" color="#E3173E" align="center" width="6.5" font="mozillavr" shader="msdf" negate="false"></a-text>
+          <a-text value="1x" color="#E3173E" align="center" width="8" font="mozillavr" shader="msdf" negate="false"></a-text>
         </a-circle>
         
         <a-circle id="btnPausa" class="clickable" radius="1.4" color="#E3173E" position="0 0 0">
-          <a-text id="txtPausa" value="PAUSA" color="#FFFFFF" align="center" width="6.5" font="mozillavr" shader="msdf" negate="false"></a-text>
+          <a-text id="txtPausa" value="PAUSA" color="#FFFFFF" align="center" width="8" font="mozillavr" shader="msdf" negate="false"></a-text>
         </a-circle>
         
         <a-circle id="btnRapido" class="clickable" radius="1.1" color="#FFFFFF" position="4 0 0">
-          <a-text value="2x >>" color="#E3173E" align="center" width="6.5" font="mozillavr" shader="msdf" negate="false"></a-text>
+          <a-text value="2x >>" color="#E3173E" align="center" width="8" font="mozillavr" shader="msdf" negate="false"></a-text>
         </a-circle>
         
         <a-circle id="btnSalir" class="clickable" radius="1.1" color="#E3173E" position="8 0 0">
-          <a-text value="Volver al\ninicio" color="#FFFFFF" align="center" width="6.5" font="mozillavr" shader="msdf" negate="false"></a-text>
+          <a-text value="Volver al\ninicio" color="#FFFFFF" align="center" width="8" font="mozillavr" shader="msdf" negate="false"></a-text>
         </a-circle>
       </a-entity>
     </a-entity>
@@ -221,7 +221,7 @@ function finalizarVideo() {
     if(videoActual.id === 'videoUni') {
       textoBoton.setAttribute('value', 'VUELVE A VER\nNUESTRA HISTORIA');
     } else {
-      textoBotonFundador.setAttribute('value', 'Volver a ver la historia de Alan Coleman');
+      textoBotonFundador.setAttribute('value', 'Explorar nuevamente la historia de Alan Coleman');
     }
 
     contenedorBtn.setAttribute('visible', 'true');
@@ -245,4 +245,5 @@ videoFundador.addEventListener('ended', finalizarVideo);
 </script>
 </body>
 </html>
+
 
