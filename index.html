@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <title>ESAN - Trayectoria histórica</title>
-  <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
-  <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+<meta charset="utf-8">
+<title>ESAN - Trayectoria histórica</title>
+<script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+<script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
 </head>
 
 <body>
 
 <a-scene>
+
   <a-assets>
-    <img id="imgLobby" src="patio.jpg">
+    <img id="imgLobby" src="pastio.jpg">
     <img id="imgAuditorio" src="butacas.jpg">
     <img id="imgAuditorio2" src="butcs.jpg"> 
     <video id="videoUni" src="video2.mp4" crossorigin="anonymous" playsinline webkit-playsinline preload="auto"></video>
@@ -30,6 +31,7 @@
   </a-entity>
 
   <a-entity id="grupoCine" look-at="[camera]" visible="false">
+    
     <a-video id="pantallaVideo"
              src="#videoUni"
              width="30"
@@ -39,44 +41,57 @@
              animation__salir="property: scale; to: 0 0 0; dur: 1500; easing: easeInBack; startEvents: videoSale">
     </a-video>
 
-    <a-entity id="interfaz" position="0 -9 0.1">
-      <a-plane id="barraFondo" width="20" height="0.4" color="#666"></a-plane>
+    <a-entity id="interfaz" position="0 -8.5 0.1">
+      <a-plane id="barraFondo" width="20" height="0.4" color="#696a6d" position="0 0 0"></a-plane>
       <a-plane id="barraProgreso" width="0.1" height="0.4" color="#E3173E" position="-10 0 0.01"></a-plane>
-      <a-text id="textoDuracion" value="0:00 / 0:00" align="center" position="0 1.5 0" width="18" font="mozillavr"></a-text>
+      
+      <a-text id="textoDuracion" value="0:00 / 0:00" align="left" position="10.5 0.3 0.1" width="12" font="mozillavr" shader="msdf" negate="false"></a-text>
 
-      <a-entity id="controles" position="0 -2.15 0">
-        <a-circle id="btnSalir" class="clickable" radius="0.95" color="#696a6d" position="-7 0 0">
-          <a-text value="Volver al\ninicio" align="center" baseline="center" width="2.5" font="mozillavr" wrap-count="15" position="0 0.12 0.05"></a-text>
+      <a-entity id="controles" position="0 -1.8 0">
+        <a-circle id="btnReset" class="clickable" radius="1.1" color="#FFFFFF" position="-8 0 0">
+          <a-text value="Reiniciar" color="#000" align="center" width="6.5" font="mozillavr" shader="msdf" negate="false"></a-text>
         </a-circle>
         
-        <a-circle id="btnNormal" class="clickable" radius="0.95" color="#696a6d" position="-3.5 0 0">
-          <a-text value="1x" align="center" baseline="center" width="2.5" font="mozillavr" wrap-count="10" position="0 0.12 0.05"></a-text>
+        <a-circle id="btnNormal" class="clickable" radius="1.1" color="#FFFFFF" position="-4 0 0">
+          <a-text value="1x" color="#E3173E" align="center" width="6.5" font="mozillavr" shader="msdf" negate="false"></a-text>
         </a-circle>
         
-        <a-circle id="btnPausa" class="clickable" radius="0.95" color="#E3173E" position="0 0 0">
-          <a-text id="txtPausa" value="PAUSA" align="center" baseline="center" width="2.5" font="mozillavr" wrap-count="10" position="0 0.12 0.05"></a-text>
+        <a-circle id="btnPausa" class="clickable" radius="1.4" color="#E3173E" position="0 0 0">
+          <a-text id="txtPausa" value="PAUSA" color="#FFFFFF" align="center" width="6.5" font="mozillavr" shader="msdf" negate="false"></a-text>
         </a-circle>
         
-        <a-circle id="btnRapido" class="clickable" radius="0.95" color="#696a6d" position="3.5 0 0">
-          <a-text value="4x >>" align="center" baseline="center" width="2.5" font="mozillavr" wrap-count="10" position="0 0.12 0.05"></a-text>
+        <a-circle id="btnRapido" class="clickable" radius="1.1" color="#FFFFFF" position="4 0 0">
+          <a-text value="2x >>" color="#E3173E" align="center" width="6.5" font="mozillavr" shader="msdf" negate="false"></a-text>
         </a-circle>
         
-        <a-circle id="btnReset" class="clickable" radius="0.95" color="#FFFFFF" position="6.5 0 0">
-          <a-text value="Reiniciar" color="#000" align="center" baseline="center" width="2.5" font="mozillavr" wrap-count="10" position="0 0.12 0.05"></a-text>
+        <a-circle id="btnSalir" class="clickable" radius="1.1" color="#E3173E" position="8 0 0">
+          <a-text value="Volver al\ninicio" color="#FFFFFF" align="center" width="6.5" font="mozillavr" shader="msdf" negate="false"></a-text>
         </a-circle>
       </a-entity>
     </a-entity>
   </a-entity>
 
-  <a-entity id="contenedorBoton" position="-2 1.6 -15" animation="property: position; to: -2 1.6 -2.5; dur: 8000; easing: easeOutCubic; delay: 500">
-    <a-circle id="btnAccion" class="clickable" color="#000" opacity="0.8" radius="0.8">
-      <a-text id="textoBoton" value="CONOCE NUESTRA\nHISTORIA" align="center" width="1" wrap-count="15" font="mozillavr" position="0 0 0.05"></a-text>
+  <a-entity id="contenedorBoton"
+            position="-2 1.6 -15"
+            animation="property: position; to: -2 1.6 -2.5; dur: 8000; easing: easeOutCubic; delay: 500">
+    <a-circle id="btnAccion" class="clickable" color="#000" opacity="0.8" radius="0.8"
+              animation__fwd="property: position; to: 0 0 0.3; dur: 300; startEvents: mouseenter"
+              animation__back="property: position; to: 0 0 0; dur: 300; startEvents: mouseleave"
+              animation__scale="property: scale; to: 1.2 1.2 1.2; dur: 300; startEvents: mouseenter"
+              animation__rescale="property: scale; to: 1 1 1; dur: 300; startEvents: mouseleave">
+      <a-text id="textoBoton" value="CONOCE NUESTRA\nHISTORIA" align="center" baseline="center" width="1" wrap-count="15" font="mozillavr" shader="msdf" negate="false" position="0 0 0.05"></a-text>
     </a-circle>
   </a-entity>
 
-  <a-entity id="contenedorBotonFundador" position="2 1.6 -15" animation="property: position; to: 2 1.6 -2.5; dur: 8000; easing: easeOutCubic; delay: 500">
-    <a-circle id="btnFundador" class="clickable" color="#000" opacity="0.8" radius="0.8">
-      <a-text id="textoBotonFundador" value="Descubre la historia del fundador de ESAN, Alan Coleman" align="center" width="1.2" wrap-count="20" font="mozillavr" position="0 0 0.05"></a-text>
+  <a-entity id="contenedorBotonFundador"
+            position="2 1.6 -15"
+            animation="property: position; to: 2 1.6 -2.5; dur: 8000; easing: easeOutCubic; delay: 500">
+    <a-circle id="btnFundador" class="clickable" color="#000" opacity="0.8" radius="0.8"
+              animation__fwd="property: position; to: 0 0 0.3; dur: 300; startEvents: mouseenter"
+              animation__back="property: position; to: 0 0 0; dur: 300; startEvents: mouseleave"
+              animation__scale="property: scale; to: 1.2 1.2 1.2; dur: 300; startEvents: mouseenter"
+              animation__rescale="property: scale; to: 1 1 1; dur: 300; startEvents: mouseleave">
+      <a-text id="textoBotonFundador" value="Descubre la historia del fundador de ESAN, Alan Coleman" align="center" baseline="center" width="1" wrap-count="20" font="mozillavr" shader="msdf" negate="false" position="0 0 0.05"></a-text>
     </a-circle>
   </a-entity>
 
@@ -87,9 +102,11 @@
     <a-entity laser-controls="hand: right" raycaster="objects: .clickable; far: 50" line="color: #FFD700"></a-entity>
     <a-entity laser-controls="hand: left" raycaster="objects: .clickable; far: 50" line="color: #FFD700"></a-entity>
   </a-entity>
+
 </a-scene>
 
 <script>
+// La lógica del script se mantiene para no romper el funcionamiento
 const videoUni = document.querySelector('#videoUni');
 const videoFundador = document.querySelector('#videoFundador');
 let videoActual = videoUni;
@@ -110,30 +127,25 @@ const camara = document.querySelector('#camara');
 
 const ANCHO_BARRA = 20;
 
-function formatearTiempo(segundos) {
-  const min = Math.floor(segundos / 60);
-  const seg = Math.floor(segundos % 60);
-  return `${min}:${seg.toString().padStart(2, '0')}`;
-}
-
-function actualizarInterfaz() {
-  if (!videoActual || isNaN(videoActual.duration) || videoActual.paused) return;
-
+function actualizarBarra() {
+  if (!videoActual || isNaN(videoActual.duration)) return;
   const progreso = videoActual.currentTime / videoActual.duration;
-  barraProgreso.setAttribute('width', Math.max(0.1, progreso * ANCHO_BARRA));
+  barraProgreso.setAttribute('width', Math.max(0.01, progreso * ANCHO_BARRA));
   barraProgreso.setAttribute('position', `${-ANCHO_BARRA / 2 + (progreso * ANCHO_BARRA) / 2} 0 0.01`);
-
-  textoDuracion.setAttribute('value', `${formatearTiempo(videoActual.currentTime)} / ${formatearTiempo(videoActual.duration)}`);
-  requestAnimationFrame(actualizarInterfaz);
+  
+  const m = Math.floor(videoActual.currentTime / 60);
+  const s = Math.floor(videoActual.currentTime % 60).toString().padStart(2, '0');
+  const md = Math.floor(videoActual.duration / 60);
+  const sd = Math.floor(videoActual.duration % 60).toString().padStart(2, '0');
+  textoDuracion.setAttribute('value', `${m}:${s} / ${md}:${sd}`);
 }
 
-// Eventos de tiempo
-videoUni.addEventListener('timeupdate', actualizarInterfaz);
-videoFundador.addEventListener('timeupdate', actualizarInterfaz);
+videoUni.addEventListener('timeupdate', actualizarBarra);
+videoFundador.addEventListener('timeupdate', actualizarBarra);
 
 function iniciarCine(videoSeleccionado) {
   videoActual = videoSeleccionado;
-  videoActual.playbackRate = 1; // Resetear velocidad a normal
+  videoActual.playbackRate = 1;
   pantalla.setAttribute('src', `#${videoSeleccionado.id}`);
   pantalla.setAttribute('scale', '0 0 0');
 
@@ -153,6 +165,7 @@ function iniciarCine(videoSeleccionado) {
   const posZ = -25 * Math.cos(angleRad);
   
   grupoCine.setAttribute('position', `${posX} 2.5 ${posZ}`);
+
   contenedorBtn.setAttribute('visible', 'false');
   contenedorBtnFundador.setAttribute('visible', 'false');
   skyPrincipal.setAttribute('visible', 'false');
@@ -166,11 +179,9 @@ function iniciarCine(videoSeleccionado) {
   setTimeout(() => {
     pantalla.emit('videoEntra');
     videoActual.play();
-    actualizarInterfaz();
   }, 500);
 }
 
-// LISTENERS DE BOTONES
 document.querySelector('#btnAccion').addEventListener('click', () => { iniciarCine(videoUni); });
 document.querySelector('#btnFundador').addEventListener('click', () => { iniciarCine(videoFundador); });
 
@@ -178,20 +189,14 @@ document.querySelector('#btnPausa').addEventListener('click', () => {
   if (videoActual.paused) { 
     videoActual.play(); 
     txtPausa.setAttribute('value', 'PAUSA'); 
-    actualizarInterfaz();
   } else { 
     videoActual.pause(); 
     txtPausa.setAttribute('value', 'PLAY'); 
   }
 });
 
-document.querySelector('#btnNormal').addEventListener('click', () => {
-  videoActual.playbackRate = 1;
-});
-
-document.querySelector('#btnRapido').addEventListener('click', () => {
-  videoActual.playbackRate = 4;
-});
+document.querySelector('#btnNormal').addEventListener('click', () => { videoActual.playbackRate = 1; });
+document.querySelector('#btnRapido').addEventListener('click', () => { videoActual.playbackRate = 2; });
 
 document.querySelector('#btnReset').addEventListener('click', () => {
   videoActual.currentTime = 0; 
@@ -201,21 +206,20 @@ document.querySelector('#btnReset').addEventListener('click', () => {
 
 document.querySelector('#btnSalir').addEventListener('click', () => {
   videoActual.pause();
-  finalizarVideo();
+  videoActual.dispatchEvent(new Event('ended'));
 });
 
 function finalizarVideo() {
   pantalla.emit('videoSale');
-
   setTimeout(() => {
     grupoCine.setAttribute('visible', 'false');
     skyButacas.setAttribute('visible', 'false');
-    skyPrincipal.setAttribute('true');
+    skyPrincipal.setAttribute('visible', 'true');
     oscurecerButacas.emit('luzOn');
     oscurecerButacas.setAttribute('visible', 'false');
     
     if(videoActual.id === 'videoUni') {
-      textoBoton.setAttribute('value', 'VUELVE A VER\nNUESTRA\nHISTORIA');
+      textoBoton.setAttribute('value', 'VUELVE A VER\nNUESTRA HISTORIA');
     } else {
       textoBotonFundador.setAttribute('value', 'Volver a ver la historia de Alan Coleman');
     }
@@ -223,9 +227,16 @@ function finalizarVideo() {
     contenedorBtn.setAttribute('visible', 'true');
     contenedorBtnFundador.setAttribute('visible', 'true');
     
-    // Reset posiciones para animación de entrada
     contenedorBtn.setAttribute('position', '-2 1.6 -15');
     contenedorBtnFundador.setAttribute('position', '2 1.6 -15');
+    
+    contenedorBtn.removeAttribute('animation');
+    contenedorBtnFundador.removeAttribute('animation');
+    
+    setTimeout(() => { 
+      contenedorBtn.setAttribute('animation', "property: position; to: -2 1.6 -2.5; dur: 6000; easing: easeOutCubic; delay: 500"); 
+      contenedorBtnFundador.setAttribute('animation', "property: position; to: 2 1.6 -2.5; dur: 6000; easing: easeOutCubic; delay: 500");
+    }, 50);
   }, 1500);
 }
 
@@ -234,11 +245,3 @@ videoFundador.addEventListener('ended', finalizarVideo);
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
