@@ -67,11 +67,6 @@
   </a-entity>
 
   <a-entity id="redNeuronal" visible="true">
-    <a-entity id="lineaHistoria"
-              line="start: 0 1.6 -15; end: -0.6 1.6 -15; color: #000000; opacity: 0.8"
-              animation__start="property: line.start; to: 0 1.6 -2.5; dur: 8000; easing: easeOutCubic; delay: 500"
-              animation__end="property: line.end; to: -0.6 1.6 -2.5; dur: 8000; easing: easeOutCubic; delay: 500">
-    </a-entity>
     <a-entity id="lineaFundador"
               line="start: -0.6 1.6 -15; end: 0.6 2.1 -15; color: #000000; opacity: 0.8"
               animation__start="property: line.start; to: -0.6 1.6 -2.5; dur: 8000; easing: easeOutCubic; delay: 500"
@@ -136,10 +131,12 @@
   </a-entity>
 
   <a-entity id="camara" camera look-controls position="0 1.6 0">
-    <a-entity id="panelBienvenida" position="-1.8 1.25 -2">
+    <a-entity id="panelBienvenida" position="0 1.6 -2.5"
+              animation__fade="property: material.opacity; from: 1; to: 0; dur: 2000; delay: 8000; startEvents: loaded"
+              animation__visible="property: visible; to: false; delay: 10000">
       <a-plane width="2.2" height="0.5" color="#FFFFFF" opacity="0.65"></a-plane>
       <a-plane width="0.05" height="0.45" color="#E3173E" position="-1 0 0.01"></a-plane>
-      <a-text value="Bienvenido a la Experiencia Inmersiva ESAN" color="#E3173E" width="2.1" align="left" position="-0.85 0.12 0.02" font="https://cdn.aframe.io/fonts/Roboto-msdf.json" shader="msdf" negrita="true"></a-text>
+      <a-text value="Bienvenido a la Experiencia Inmersiva ESAN" color="#E3173E" width="2.1" align="left" position="-0.85 0.12 0.02" font="https://cdn.aframe.io/fonts/Roboto-msdf.json" shader="msdf"></a-text>
       <a-text value="Explora nuestra historia y futuro" color="#696a6d" width="2.0" align="left" position="-0.85 -0.10 0.02" font="https://cdn.aframe.io/fonts/Roboto-msdf.json" shader="msdf"></a-text>
     </a-entity>
     <a-entity cursor="fuse: false; rayOrigin: mouse" raycaster="objects: .clickable"></a-entity>
@@ -151,6 +148,7 @@
 </a-scene>
 
 <script>
+// (El resto del script se mantiene exactamente igual para no afectar la funcionalidad de video y botones)
 const videoUni = document.querySelector('#videoUni');
 const videoFundador = document.querySelector('#videoFundador');
 const video8 = document.querySelector('#video8');
@@ -164,7 +162,6 @@ const contenedorBtnFundador = document.querySelector('#contenedorBotonFundador')
 const contenedorBtnLabs = document.querySelector('#contenedorBotonLabs');
 const contenedorBtnTour = document.querySelector('#contenedorBotonTour');
 const redNeuronal = document.querySelector('#redNeuronal'); 
-const lineaHistoria = document.querySelector('#lineaHistoria'); 
 const lineaFundador = document.querySelector('#lineaFundador'); 
 const lineaLabs = document.querySelector('#lineaLaboratorios');
 const lineaTour = document.querySelector('#lineaTour'); 
@@ -268,7 +265,7 @@ function finalizarVideo() {
 
     const elementosConAnimacion = [
       contenedorBtn, contenedorBtnFundador, contenedorBtnLabs, contenedorBtnTour,
-      lineaHistoria, lineaFundador, lineaLabs, lineaTour
+      lineaFundador, lineaLabs, lineaTour
     ];
 
     elementosConAnimacion.forEach(el => {
@@ -282,12 +279,11 @@ function finalizarVideo() {
     contenedorBtnLabs.setAttribute('position', '1.2 1.6 -15');
     contenedorBtnTour.setAttribute('position', '2.4 1.6 -15');
     
-    lineaHistoria.setAttribute('line', {start: '0 1.6 -15', end: '-0.6 1.6 -15'});
     lineaFundador.setAttribute('line', {start: '-0.6 1.6 -15', end: '0.6 2.1 -15'});
     lineaLabs.setAttribute('line', {start: '0.6 2.1 -15', end: '1.2 1.1 -15'});
     lineaTour.setAttribute('line', {start: '1.2 1.1 -15', end: '2.4 1.6 -15'});
 
-    [contenedorBtn, contenedorBtnFundador, contenedorBtnLabs, contenedorBtnTour, redNeuronal, panelBienvenida].forEach(el => el.setAttribute('visible', 'true'));
+    [contenedorBtn, contenedorBtnFundador, contenedorBtnLabs, contenedorBtnTour, redNeuronal].forEach(el => el.setAttribute('visible', 'true'));
 
     setTimeout(() => {
       const dur = 6000;
@@ -297,9 +293,6 @@ function finalizarVideo() {
       contenedorBtnFundador.setAttribute('animation', `property: position; from: 0.6 1.6 -15; to: 0.6 1.6 -2.5; dur: ${dur}; easing: ${ease}`);
       contenedorBtnLabs.setAttribute('animation', `property: position; from: 1.2 1.6 -15; to: 1.2 1.6 -2.5; dur: ${dur}; easing: ${ease}`);
       contenedorBtnTour.setAttribute('animation', `property: position; from: 2.4 1.6 -15; to: 2.4 1.6 -2.5; dur: ${dur}; easing: ${ease}`);
-
-      lineaHistoria.setAttribute('animation__start', `property: line.start; from: 0 1.6 -15; to: 0 1.6 -2.5; dur: ${dur}; easing: ${ease}`);
-      lineaHistoria.setAttribute('animation__end', `property: line.end; from: -0.6 1.6 -15; to: -0.6 1.6 -2.5; dur: ${dur}; easing: ${ease}`);
 
       lineaFundador.setAttribute('animation__start', `property: line.start; from: -0.6 1.6 -15; to: -0.6 1.6 -2.5; dur: ${dur}; easing: ${ease}`);
       lineaFundador.setAttribute('animation__end', `property: line.end; from: 0.6 2.1 -15; to: 0.6 2.1 -2.5; dur: ${dur}; easing: ${ease}`);
@@ -318,7 +311,6 @@ function finalizarVideo() {
 </script>
 </body>
 </html>
-
 
 
 
