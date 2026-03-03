@@ -31,6 +31,16 @@
             animation__aclarar="property: material.opacity; to: 0; dur: 1000; startEvents: luzOn">
   </a-entity>
 
+  <a-entity id="panelBienvenida" position="0 1.6 -15"
+            animation__pos="property: position; to: 0 1.6 -2.5; dur: 8000; easing: easeOutCubic; delay: 500"
+            animation__fade="property: material.opacity; from: 1; to: 0; dur: 2000; delay: 8000"
+            animation__visible="property: visible; to: false; delay: 10000">
+      <a-plane width="2.2" height="0.5" color="#FFFFFF" opacity="0.65"></a-plane>
+      <a-plane width="0.05" height="0.45" color="#E3173E" position="-1 0 0.01"></a-plane>
+      <a-text value="Bienvenido a la Experiencia Inmersiva ESAN" color="#E3173E" width="2.1" align="left" position="-0.85 0.12 0.02" font="https://cdn.aframe.io/fonts/Roboto-msdf.json" shader="msdf"></a-text>
+      <a-text value="Explora nuestra historia y futuro" color="#696a6d" width="2.0" align="left" position="-0.85 -0.10 0.02" font="https://cdn.aframe.io/fonts/Roboto-msdf.json" shader="msdf"></a-text>
+  </a-entity>
+
   <a-entity id="grupoCine" visible="false">
     <a-video id="pantallaVideo"
              src="#videoUni"
@@ -69,23 +79,23 @@
   <a-entity id="redNeuronal" visible="true">
     <a-entity id="lineaFundador"
               line="start: -0.6 1.6 -15; end: 0.6 2.1 -15; color: #000000; opacity: 0.8"
-              animation__start="property: line.start; to: -0.6 1.6 -2.5; dur: 8000; easing: easeOutCubic; delay: 500"
-              animation__end="property: line.end; to: 0.6 2.1 -2.5; dur: 8000; easing: easeOutCubic; delay: 500">
+              animation__start="property: line.start; to: -0.6 1.6 -2.5; dur: 8000; easing: easeOutCubic; delay: 10000"
+              animation__end="property: line.end; to: 0.6 2.1 -2.5; dur: 8000; easing: easeOutCubic; delay: 10000">
     </a-entity>
     <a-entity id="lineaLaboratorios"
               line="start: 0.6 2.1 -15; end: 1.2 1.1 -15; color: #000000; opacity: 0.8"
-              animation__start="property: line.start; to: 0.6 2.1 -2.5; dur: 8000; easing: easeOutCubic; delay: 500"
-              animation__end="property: line.end; to: 1.2 1.1 -2.5; dur: 8000; easing: easeOutCubic; delay: 500">
+              animation__start="property: line.start; to: 0.6 2.1 -2.5; dur: 8000; easing: easeOutCubic; delay: 10000"
+              animation__end="property: line.end; to: 1.2 1.1 -2.5; dur: 8000; easing: easeOutCubic; delay: 10000">
     </a-entity>
     <a-entity id="lineaTour"
               line="start: 1.2 1.1 -15; end: 2.4 1.6 -15; color: #000000; opacity: 0.8"
-              animation__start="property: line.start; to: 1.2 1.1 -2.5; dur: 8000; easing: easeOutCubic; delay: 500"
-              animation__end="property: line.end; to: 2.4 1.6 -2.5; dur: 8000; easing: easeOutCubic; delay: 500">
+              animation__start="property: line.start; to: 1.2 1.1 -2.5; dur: 8000; easing: easeOutCubic; delay: 10000"
+              animation__end="property: line.end; to: 2.4 1.6 -2.5; dur: 8000; easing: easeOutCubic; delay: 10000">
     </a-entity>
   </a-entity>
 
   <a-entity id="contenedorBoton" position="-0.6 1.6 -15"
-            animation="property: position; to: -0.6 1.6 -2.5; dur: 8000; easing: easeOutCubic; delay: 500">
+            animation="property: position; to: -0.6 1.6 -2.5; dur: 8000; easing: easeOutCubic; delay: 10000">
     <a-circle id="btnAccion" class="clickable" color="#000" opacity="0.8" radius="0.4"
               animation__fwd="property: position; to: 0 0 0.3; dur: 300; startEvents: mouseenter"
               animation__back="property: position; to: 0 0 0; dur: 300; startEvents: mouseleave"
@@ -96,19 +106,19 @@
   </a-entity>
 
   <a-entity id="contenedorBotonFundador" position="0.6 1.6 -15"
-            animation="property: position; to: 0.6 1.6 -2.5; dur: 8000; easing: easeOutCubic; delay: 500">
+            animation="property: position; to: 0.6 1.6 -2.5; dur: 8000; easing: easeOutCubic; delay: 10000">
     <a-circle id="btnFundador" class="clickable" color="#000" opacity="0.8" radius="0.4"
               position="0 0.5 0" 
               animation__fwd="property: position; to: 0 0.5 0.3; dur: 300; startEvents: mouseenter"
               animation__back="property: position; to: 0 0.5 0; dur: 300; startEvents: mouseleave"
               animation__scale="property: scale; to: 1.2 1.2 1.2; dur: 300; startEvents: mouseenter"
               animation__rescale="property: scale; to: 1 1 1; dur: 300; startEvents: mouseleave">
-      <a-text id="textoBotonFundador" value="Descubre la historia del fundador de ESAN, Alan B. Coleman" align="center" baseline="center" width="0.8" wrap-count="15" font="mozillavr" shader="msdf" negate="false" position="0 0 0.05"></a-text>
+      <a-text id="textoBotonFundador" value="Descubre la historia del fundador de ESAN, Alan B. Coleman" align="center" baseline="center" width="0.8" wrap-count="15" font="mozillavr" shader="msdf" negate="false" position="0 0.05 0.05"></a-text>
     </a-circle>
   </a-entity>
 
   <a-entity id="contenedorBotonLabs" position="1.2 1.6 -15"
-            animation="property: position; to: 1.2 1.6 -2.5; dur: 8000; easing: easeOutCubic; delay: 500">
+            animation="property: position; to: 1.2 1.6 -2.5; dur: 8000; easing: easeOutCubic; delay: 10000">
     <a-circle id="btnLaboratorios" class="clickable" color="#000" opacity="0.8" radius="0.4"
               position="0 -0.5 0" 
               animation__fwd="property: position; to: 0 -0.5 0.3; dur: 300; startEvents: mouseenter"
@@ -120,7 +130,7 @@
   </a-entity>
 
   <a-entity id="contenedorBotonTour" position="2.4 1.6 -15"
-            animation="property: position; to: 2.4 1.6 -2.5; dur: 8000; easing: easeOutCubic; delay: 500">
+            animation="property: position; to: 2.4 1.6 -2.5; dur: 8000; easing: easeOutCubic; delay: 10000">
     <a-circle id="btnTour" class="clickable" color="#000" opacity="0.8" radius="0.4"
               animation__fwd="property: position; to: 0 0 0.3; dur: 300; startEvents: mouseenter"
               animation__back="property: position; to: 0 0 0; dur: 300; startEvents: mouseleave"
@@ -131,14 +141,6 @@
   </a-entity>
 
   <a-entity id="camara" camera look-controls position="0 1.6 0">
-    <a-entity id="panelBienvenida" position="0 1.6 -2.5"
-              animation__fade="property: material.opacity; from: 1; to: 0; dur: 2000; delay: 8000; startEvents: loaded"
-              animation__visible="property: visible; to: false; delay: 10000">
-      <a-plane width="2.2" height="0.5" color="#FFFFFF" opacity="0.65"></a-plane>
-      <a-plane width="0.05" height="0.45" color="#E3173E" position="-1 0 0.01"></a-plane>
-      <a-text value="Bienvenido a la Experiencia Inmersiva ESAN" color="#E3173E" width="2.1" align="left" position="-0.85 0.12 0.02" font="https://cdn.aframe.io/fonts/Roboto-msdf.json" shader="msdf"></a-text>
-      <a-text value="Explora nuestra historia y futuro" color="#696a6d" width="2.0" align="left" position="-0.85 -0.10 0.02" font="https://cdn.aframe.io/fonts/Roboto-msdf.json" shader="msdf"></a-text>
-    </a-entity>
     <a-entity cursor="fuse: false; rayOrigin: mouse" raycaster="objects: .clickable"></a-entity>
   </a-entity>
 
@@ -148,7 +150,7 @@
 </a-scene>
 
 <script>
-// (El resto del script se mantiene exactamente igual para no afectar la funcionalidad de video y botones)
+// El script se mantiene igual
 const videoUni = document.querySelector('#videoUni');
 const videoFundador = document.querySelector('#videoFundador');
 const video8 = document.querySelector('#video8');
@@ -311,11 +313,3 @@ function finalizarVideo() {
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
