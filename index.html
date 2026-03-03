@@ -113,7 +113,7 @@
               animation__back="property: position; to: 0 0.5 0; dur: 300; startEvents: mouseleave"
               animation__scale="property: scale; to: 1.2 1.2 1.2; dur: 300; startEvents: mouseenter"
               animation__rescale="property: scale; to: 1 1 1; dur: 300; startEvents: mouseleave">
-      <a-text id="textoBotonFundador" value="Descubre la historia del fundador de ESAN, Alan B. Coleman" align="center" baseline="center" width="0.8" wrap-count="15" font="mozillavr" shader="msdf" negate="false" position="0 0.05 0.05"></a-text>
+      <a-text id="textoBotonFundador" value="Descubre la historia del fundador de ESAN\nAlan B. Coleman" align="center" baseline="center" width="0.8" wrap-count="15" font="mozillavr" shader="msdf" negate="false" position="0 0.05 0.05"></a-text>
     </a-circle>
   </a-entity>
 
@@ -263,7 +263,7 @@ function finalizarVideo() {
     if(videoActual.id === 'videoFundador') textoBotonFundador.setAttribute('value', 'Explorar nuevamente la historia de Alan B. Coleman');
     if(videoActual.id === 'video8') textoBotonLabs.setAttribute('value', 'Revisitar\nLaboratorios\nESAN');
     
-    textoBotonTour.setAttribute('value', 'Regresar');
+    textoBotonTour.setAttribute('value', 'Explora\nla Universidad\nESAN');
 
     const elementosConAnimacion = [
       contenedorBtn, contenedorBtnFundador, contenedorBtnLabs, contenedorBtnTour,
