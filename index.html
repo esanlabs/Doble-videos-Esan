@@ -14,7 +14,7 @@
     <img id="imgLobby" src="jardin.jpg">
     <img id="imgAuditorio" src="butcs.jpg">
     <img id="imgAuditorio2" src="butcs.jpg"> 
-    <img id="imgEvento" src="fuente.jpg">
+    <img id="imgEvento" src="fuence.jpg">
     <img id="imgLabsNuevos" src="eventos.jpg">
     
     <audio id="audioBienvenida" src="audio.mp3" preload="auto" crossorigin="anonymous"></audio>
@@ -181,24 +181,29 @@ let videoActual = videoUni;
 
 const audioBienvenida = document.querySelector('#audioBienvenida');
 
-// FUNCIÓN PARA DESBLOQUEAR EL AUDIO (NECESARIO PARA QUEST)
-function desbloquearYJugar() {
+// FUNCIÓN PARA DESBLOQUEAR EL AUDIO SIN GATILLO (DETECTANDO MOVIMIENTO DE CABEZA)
+function desbloquearConMovimiento() {
     audioBienvenida.play().then(() => {
-        // Si suena, quitamos los eventos para no repetir
-        window.removeEventListener('click', desbloquearYJugar);
-        window.removeEventListener('touchstart', desbloquearYJugar);
-    }).catch(e => console.log("Aún bloqueado"));
+        // Si suena, quitamos el detector de movimiento
+        window.removeEventListener('deviceorientation', desbloquearConMovimiento);
+        document.removeEventListener('mousemove', desbloquearConMovimiento);
+        console.log("Audio iniciado por sensor de movimiento.");
+    }).catch(e => {
+        // Si sigue bloqueado, lo intentamos en el siguiente frame
+    });
 }
 
 window.addEventListener('load', () => {
-    // Intentamos autoplay (funcionará en PC)
+    // Intentamos autoplay normal
     setTimeout(() => {
         audioBienvenida.playbackRate = 1.0; 
         audioBienvenida.play().catch(e => {
-            console.log("Meta Quest requiere interacción. Esperando clic...");
-            // Si falla, activamos los "escuchadores" de interacción
-            window.addEventListener('click', desbloquearYJugar);
-            window.addEventListener('touchstart', desbloquearYJugar);
+            // Si falla (como en los Quest), activamos detectores de "presencia"
+            // Esto se dispara en cuanto el usuario mueve los lentes o la cabeza
+            window.addEventListener('deviceorientation', desbloquearConMovimiento, {once: true});
+            document.addEventListener('mousemove', desbloquearConMovimiento, {once: true});
+            // También se desbloquea si el usuario simplemente mira a su alrededor (look-controls)
+            document.querySelector('a-scene').addEventListener('enter-vr', desbloquearConMovimiento, {once: true});
         });
     }, 500);
 });
