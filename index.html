@@ -4,6 +4,110 @@
     <meta charset="utf-8">
     <title>ESAN RV- Trayectoria Histórica</title>
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <script>
+      // ========================================================
+      // COMPONENTE THREE.JS: CUBOS VIVOS (ROJO, CELESTE, BLANCO)
+      // ========================================================
+      AFRAME.registerComponent('cubos-digitales', {
+        init: function () {
+          const scene3D = this.el.sceneEl.object3D;
+          this.count = 1000; // Cantidad óptima y fluida para VR
+          
+          this.geometry = new THREE.BufferGeometry();
+          const positions = new Float32Array(this.count * 3);
+          const colors = new Float32Array(this.count * 3);
+          
+          // Paleta de Colores Solicitada (Sólidos)
+          const colorRojo = new THREE.Color(0xff0026);    // Rojo intenso
+          const colorCeleste = new THREE.Color(0x00bfff); // Celeste digital
+          const colorBlanco = new THREE.Color(0xffffff);  // Blanco puro
+          
+          this.velocities = [];
+
+          for (let i = 0; i < this.count; i++) {
+            // Distribución en un entorno envolvente completo alrededor de la cámara
+            positions[i * 3] = (Math.random() - 0.5) * 50;
+            positions[i * 3 + 1] = (Math.random() - 0.5) * 40 + 1.6; // Centrado a la altura de los ojos en VR
+            positions[i * 3 + 2] = (Math.random() - 0.5) * 50;
+            
+            // Selección aleatoria estricta entre Rojo, Celeste y Blanco
+            const rand = Math.random();
+            let selectedColor;
+            if (rand < 0.33) {
+              selectedColor = colorRojo;
+            } else if (rand < 0.66) {
+              selectedColor = colorCeleste;
+            } else {
+              selectedColor = colorBlanco;
+            }
+            
+            colors[i * 3] = selectedColor.r;
+            colors[i * 3 + 1] = selectedColor.g;
+            colors[i * 3 + 2] = selectedColor.b;
+
+            // Velocidades de movimiento tridimensional continuo
+            this.velocities.push((Math.random() - 0.5) * 0.02); // X
+            this.velocities.push((Math.random() - 0.5) * 0.02); // Y
+            this.velocities.push((Math.random() - 0.5) * 0.02); // Z
+          }
+          
+          this.geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+          this.geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+          
+          // Crear una textura blanca cuadrada en memoria para que responda a gl_PointSize correctamente
+          const canvas = document.createElement('canvas');
+          canvas.width = 16;
+          canvas.height = 16;
+          const ctx = canvas.getContext('2d');
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(0, 0, 16, 16);
+          const texture = new THREE.CanvasTexture(canvas);
+
+          // Renderizado de profundidad estándar para mantener colores sólidos frente al fondo claro
+          this.material = new THREE.PointsMaterial({
+            size: 0.22,
+            vertexColors: true,
+            transparent: true,
+            opacity: 1.0,
+            map: texture,
+            blending: THREE.NormalBlending
+          });
+          
+          this.particleSystem = new THREE.Points(this.geometry, this.material);
+          scene3D.add(this.particleSystem);
+        },
+        
+        // Ciclo de renderizado continuo (Garantiza el movimiento perpetuo)
+        tick: function (time, timeDelta) {
+          if (!this.particleSystem) return;
+          
+          const pos = this.geometry.attributes.position.array;
+          
+          // Animación de tamaño chica y controlada (Entre 0.12 y 0.28)
+          this.material.size = (Math.sin(time * 0.002) * 0.08) + 0.20;
+
+          for (let i = 0; i < this.count; i++) {
+            const i3 = i * 3;
+            
+            // Movimiento constante en los 3 ejes (Flotación por el espacio)
+            pos[i3] += this.velocities[i3];
+            pos[i3 + 1] += this.velocities[i3 + 1];
+            pos[i3 + 2] += this.velocities[i3 + 2];
+            
+            // Límites espaciales (Efecto rebote)
+            if (Math.abs(pos[i3]) > 25) this.velocities[i3] *= -1;
+            if (Math.abs(pos[i3 + 1] - 1.6) > 20) this.velocities[i3 + 1] *= -1;
+            if (Math.abs(pos[i3 + 2]) > 25) this.velocities[i3 + 2] *= -1;
+          }
+          
+          this.geometry.attributes.position.needsUpdate = true;
+          
+          // Rotación general constante de toda la nube de cubos
+          this.particleSystem.rotation.y += 0.0005;
+          this.particleSystem.rotation.x += 0.0002;
+        }
+      });
+    </script>
 </head>
 
 <body>
@@ -16,9 +120,9 @@
     <img id="imgAuditorio2" src="btcs-1.jpg"> 
     <img id="imgEvento" src="fuente.jpg">
     <img id="imgLabsNuevos" src="eventos.jpg">
-    
+     
     <audio id="audioBienvenida" src="audio.mp3" preload="auto" crossorigin="anonymous"></audio>
-    
+     
     <video id="videoUni" src="video2.mp4" crossorigin="anonymous" playsinline webkit-playsinline preload="auto"></video>
     <video id="videoFundador" src="video6a.mp4" crossorigin="anonymous" playsinline webkit-playsinline preload="auto"></video>
     <video id="video8" src="cars.mp4" crossorigin="anonymous" playsinline webkit-playsinline preload="auto"></video>
@@ -26,6 +130,9 @@
   </a-assets>
 
   <a-sky id="skyPrincipal" src="#imgLobby" radius="40" rotation="0 -90 0"></a-sky>
+  
+  <a-entity cubos-digitales></a-entity>
+
   <a-sky id="skyButacas" src="#imgAuditorio" radius="40" rotation="0 -90 0" visible="false"></a-sky>
 
   <a-entity id="oscurecerButacas"
@@ -181,28 +288,20 @@ let videoActual = videoUni;
 
 const audioBienvenida = document.querySelector('#audioBienvenida');
 
-// FUNCIÓN PARA DESBLOQUEAR EL AUDIO SIN GATILLO (DETECTANDO MOVIMIENTO DE CABEZA)
 function desbloquearConMovimiento() {
     audioBienvenida.play().then(() => {
-        // Si suena, quitamos el detector de movimiento
         window.removeEventListener('deviceorientation', desbloquearConMovimiento);
         document.removeEventListener('mousemove', desbloquearConMovimiento);
         console.log("Audio iniciado por sensor de movimiento.");
-    }).catch(e => {
-        // Si sigue bloqueado, lo intentamos en el siguiente frame
-    });
+    }).catch(e => {});
 }
 
 window.addEventListener('load', () => {
-    // Intentamos autoplay normal
     setTimeout(() => {
         audioBienvenida.playbackRate = 1.0; 
         audioBienvenida.play().catch(e => {
-            // Si falla (como en los Quest), activamos detectores de "presencia"
-            // Esto se dispara en cuanto el usuario mueve los lentes o la cabeza
             window.addEventListener('deviceorientation', desbloquearConMovimiento, {once: true});
             document.addEventListener('mousemove', desbloquearConMovimiento, {once: true});
-            // También se desbloquea si el usuario simplemente mira a su alrededor (look-controls)
             document.querySelector('a-scene').addEventListener('enter-vr', desbloquearConMovimiento, {once: true});
         });
     }, 500);
@@ -373,4 +472,3 @@ function finalizarVideo() {
 </script>
 </body>
 </html>
-
